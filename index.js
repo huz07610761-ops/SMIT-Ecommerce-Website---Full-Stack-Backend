@@ -21,6 +21,4 @@ app.set('views','view')
 
 connectdb()
 
-app.listen(4000,()=>{
-    console.log("Server is Running on Port 4000")
-})
+module.exports = app;
