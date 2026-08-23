@@ -19,6 +19,12 @@ app.use('/form',router)
 app.set('view engine','ejs')
 app.set('views','view')
 
+app.get('/', (req, res) => {
+    res.json({
+        message: "API is running"
+    });
+});
+
 connectdb()
 
 module.exports = app;
