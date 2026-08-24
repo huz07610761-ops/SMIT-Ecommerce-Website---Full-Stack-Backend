@@ -3,16 +3,1019 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Create Page</title>
+
+    <title>Create Product</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at top left, #dbeafe 0%, transparent 35%),
+                radial-gradient(circle at bottom right, #fce7f3 0%, transparent 35%),
+                #f8fafc;
+
+            min-height: 100vh;
+            padding: 50px 20px;
+            color: #111827;
+        }
+
+        .page {
+            width: 100%;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        /* Header */
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 7px 12px;
+            border-radius: 999px;
+
+            background: #111827;
+            color: white;
+
+            font-size: 12px;
+            font-weight: 600;
+
+            margin-bottom: 15px;
+        }
+
+        .badge span {
+            width: 7px;
+            height: 7px;
+            background: #22c55e;
+            border-radius: 50%;
+        }
+
+        .header h1 {
+            font-size: 38px;
+            letter-spacing: -1.5px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #6b7280;
+            font-size: 15px;
+        }
+
+        /* Main Card */
+
+        .form-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(15px);
+
+            border: 1px solid rgba(255, 255, 255, 0.8);
+
+            border-radius: 28px;
+
+            padding: 35px;
+
+            box-shadow:
+                0 25px 70px rgba(15, 23, 42, 0.10);
+
+            display: grid;
+            grid-template-columns: 1fr 0.75fr;
+            gap: 45px;
+        }
+
+        /* Section */
+
+        .section-title {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .section-title span {
+            display: block;
+            color: #9ca3af;
+            font-size: 12px;
+            font-weight: 400;
+            margin-top: 5px;
+        }
+
+        /* Fields */
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .input {
+            width: 100%;
+            height: 50px;
+
+            border: 1px solid #e5e7eb;
+            border-radius: 13px;
+
+            padding: 0 15px;
+
+            outline: none;
+
+            background: #f9fafb;
+
+            font-size: 14px;
+
+            transition: 0.2s;
+        }
+
+        .input:hover {
+            border-color: #cbd5e1;
+        }
+
+        .input:focus {
+            background: white;
+            border-color: #111827;
+
+            box-shadow:
+                0 0 0 4px rgba(17, 24, 39, 0.07);
+        }
+
+        /* Price Grid */
+
+        .price-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        /* Image */
+
+        .image-box {
+            padding: 18px;
+
+            background: #f8fafc;
+
+            border: 1px dashed #cbd5e1;
+
+            border-radius: 18px;
+        }
+
+        .image-box small {
+            display: block;
+            margin-top: 8px;
+            color: #9ca3af;
+            font-size: 11px;
+        }
+
+        /* Color Section */
+
+        .color-panel {
+            background: #f8fafc;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 20px;
+
+            padding: 20px;
+
+            margin-top: 10px;
+        }
+
+        .color-picker-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .color-input {
+            width: 55px;
+            height: 50px;
+
+            border: none;
+            padding: 0;
+
+            border-radius: 13px;
+
+            cursor: pointer;
+
+            background: transparent;
+        }
+
+        .color-input::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        .color-input::-webkit-color-swatch {
+            border: none;
+            border-radius: 12px;
+        }
+
+        .add-color {
+            height: 50px;
+
+            border: none;
+
+            padding: 0 18px;
+
+            border-radius: 13px;
+
+            background: #111827;
+            color: white;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .add-color:hover {
+            background: #374151;
+            transform: translateY(-1px);
+        }
+
+        .selected-title {
+            font-size: 12px;
+            color: #6b7280;
+
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        #selectedColors {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .color-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            padding: 6px 8px;
+
+            border-radius: 999px;
+
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .color-circle {
+            width: 25px;
+            height: 25px;
+
+            border-radius: 50%;
+
+            border: 1px solid #d1d5db;
+        }
+
+        .remove-color {
+            border: none;
+
+            width: 20px;
+            height: 20px;
+
+            border-radius: 50%;
+
+            background: #fee2e2;
+            color: #dc2626;
+
+            cursor: pointer;
+
+            font-weight: bold;
+        }
+
+        /* Right Preview */
+
+        .preview {
+            background: #111827;
+
+            border-radius: 24px;
+
+            padding: 25px;
+
+            color: white;
+
+            min-height: 100%;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .preview::before {
+            content: "";
+
+            position: absolute;
+
+            width: 220px;
+            height: 220px;
+
+            border-radius: 50%;
+
+            background: #6366f1;
+
+            filter: blur(70px);
+
+            opacity: 0.35;
+
+            top: -80px;
+            right: -80px;
+        }
+
+        .preview-label {
+            position: relative;
+
+            font-size: 11px;
+            color: #9ca3af;
+
+            text-transform: uppercase;
+
+            letter-spacing: 2px;
+        }
+
+        .preview h2 {
+            position: relative;
+
+            font-size: 28px;
+
+            margin-top: 10px;
+
+            margin-bottom: 25px;
+        }
+
+        .preview-image {
+            position: relative;
+
+            width: 100%;
+            height: 220px;
+
+            background: #1f2937;
+
+            border-radius: 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            margin-bottom: 20px;
+        }
+
+        .preview-image img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: none;
+        }
+
+        .placeholder {
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .preview-price {
+            position: relative;
+
+            font-size: 22px;
+            font-weight: 800;
+
+            margin-bottom: 10px;
+        }
+
+        .preview-colors {
+            position: relative;
+
+            display: flex;
+            gap: 7px;
+        }
+
+        .preview-dot {
+            width: 20px;
+            height: 20px;
+
+            border-radius: 50%;
+
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+
+        /* Submit */
+
+        .submit-area {
+            grid-column: 1 / -1;
+
+            border-top: 1px solid #e5e7eb;
+
+            padding-top: 25px;
+
+            display: flex;
+
+            justify-content: flex-end;
+        }
+
+        .submit {
+            border: none;
+
+            padding: 15px 28px;
+
+            border-radius: 14px;
+
+            background: #111827;
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .submit:hover {
+            background: #374151;
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 25px rgba(17, 24, 39, 0.2);
+        }
+
+        /* Responsive */
+
+        @media (max-width: 850px) {
+
+            .form-card {
+                grid-template-columns: 1fr;
+            }
+
+            .preview {
+                min-height: 500px;
+            }
+        }
+
+        @media (max-width: 550px) {
+
+            body {
+                padding: 25px 12px;
+            }
+
+            .form-card {
+                padding: 20px;
+
+                border-radius: 20px;
+            }
+
+            .header h1 {
+                font-size: 30px;
+            }
+
+            .price-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .color-picker-row {
+                align-items: stretch;
+            }
+
+            .add-color {
+                flex: 1;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <form action="/form/productadd" method="post">
-        <input type="text" name="name" placeholder="Enter your name" /><br><br>
-        <input type="number" name="price" placeholder="Enter your Product Price"><br><br>
-        <input type="number" name="delPrice" placeholder="Enter your discount Price"><br><br>
-        <input type="number" name="rating" placeholder="Enter your rating value"><br><br>
-        <input type="text" name="img" placeholder="Enter your Live Image Url"><br><br>
-        <button type="submit">Create Product</button>
+
+<div class="page">
+
+    <!-- Header -->
+
+    <div class="header">
+
+        <div class="badge">
+            <span></span>
+            Product Management
+        </div>
+
+        <h1>Create New Product</h1>
+
+        <p>
+            Add your product details, pricing, image and available colors.
+        </p>
+
+    </div>
+
+
+    <!-- Form -->
+
+    <form
+        action="/form/productadd"
+        method="post"
+        class="form-card"
+        id="productForm"
+    >
+
+        <!-- Left Side -->
+
+        <div>
+
+            <div class="section-title">
+                Product Information
+
+                <span>
+                    Basic information about your product
+                </span>
+            </div>
+
+
+            <!-- Product Name -->
+
+            <div class="field">
+
+                <label>Product Name</label>
+
+                <input
+                    class="input"
+                    type="text"
+                    name="name"
+                    id="productName"
+                    placeholder="e.g. Premium Cotton T-Shirt"
+                    required
+                >
+
+            </div>
+
+
+            <!-- Price -->
+
+            <div class="price-grid">
+
+                <div class="field">
+
+                    <label>Product Price</label>
+
+                    <input
+                        class="input"
+                        type="number"
+                        name="price"
+                        id="productPrice"
+                        placeholder="2500"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>Discount Price</label>
+
+                    <input
+                        class="input"
+                        type="number"
+                        name="delPrice"
+                        placeholder="3000"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- Rating -->
+
+            <div class="field">
+
+                <label>Rating</label>
+
+                <input
+                    class="input"
+                    type="number"
+                    name="rating"
+                    placeholder="4.5"
+                    min="0"
+                    max="5"
+                    step="0.1"
+                >
+
+            </div>
+
+
+            <!-- Image -->
+
+            <div class="field">
+
+                <label>Product Image URL</label>
+
+                <div class="image-box">
+
+                    <input
+                        class="input"
+                        type="url"
+                        name="img"
+                        id="imageUrl"
+                        placeholder="https://example.com/product.jpg"
+                        required
+                    >
+
+                    <small>
+                        Use a direct image URL for your product.
+                    </small>
+
+                </div>
+
+            </div>
+
+            <select class="input" name="size" id="size" style="margin-bottom: 10px;">
+
+                <option value="" disabled selected >
+                    Select product size
+                </option>
+
+                <option value="XS">Extra Small (XS)</option>
+                <option value="S">Small (S)</option>
+                <option value="M">Medium (M)</option>
+                <option value="L">Large (L)</option>
+                <option value="XL">Extra Large (XL)</option>
+                <option value="XXL">Double XL (XXL)</option>
+
+            </select>
+
+            <!-- Colors -->
+
+            <div class="field">
+
+                <label>Available Colors</label>
+
+                <div class="color-panel">
+
+                    <div class="color-picker-row">
+
+                        <input
+                            type="color"
+                            id="colorPicker"
+                            class="color-input"
+                            value="#111827"
+                        >
+
+                        <button
+                            type="button"
+                            class="add-color"
+                            onclick="addColor()"
+                        >
+                            + Add Color
+                        </button>
+
+                    </div>
+
+
+                    <div class="selected-title">
+                        Selected colors
+                    </div>
+
+
+                    <div id="selectedColors"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Right Preview -->
+
+        <div class="preview">
+
+            <div class="preview-label">
+                Live Preview
+            </div>
+
+            <h2 id="previewName">
+                Your Product
+            </h2>
+
+
+            <div class="preview-image">
+
+                <img id="previewImg" alt="Product preview">
+
+                <div
+                    class="placeholder"
+                    id="placeholder"
+                >
+                    Product image preview
+                </div>
+
+            </div>
+
+
+            <div
+                class="preview-price"
+                id="previewPrice"
+            >
+                Rs. 0
+            </div>
+
+
+            <div
+                class="preview-colors"
+                id="previewColors"
+            ></div>
+
+        </div>
+
+
+        <!-- Submit -->
+
+        <div class="submit-area">
+
+            <button
+                type="submit"
+                class="submit"
+            >
+                Create Product →
+            </button>
+
+        </div>
+
     </form>
+
+</div>
+
+
+<script>
+
+    const colors = [];
+
+    const form = document.getElementById("productForm");
+
+    const colorPicker = document.getElementById("colorPicker");
+
+    const selectedColors =
+        document.getElementById("selectedColors");
+
+    const previewColors =
+        document.getElementById("previewColors");
+
+
+    /* =========================
+       ADD COLOR
+    ========================= */
+
+    function addColor() {
+
+        const color = colorPicker.value;
+
+        if (colors.includes(color)) {
+
+            alert("This color is already selected.");
+
+            return;
+        }
+
+
+        colors.push(color);
+
+
+        /*
+            Hidden input create hoga.
+
+            Example:
+
+            <input
+                type="hidden"
+                name="colors"
+                value="#ff0000"
+            >
+        */
+
+        const input =
+            document.createElement("input");
+
+        input.type = "hidden";
+
+        input.name = "colors";
+
+        input.value = color;
+
+        input.dataset.color = color;
+
+        form.appendChild(input);
+
+
+        renderColors();
+
+    }
+
+
+    /* =========================
+       REMOVE COLOR
+    ========================= */
+
+    function removeColor(color) {
+
+        const index =
+            colors.indexOf(color);
+
+        if (index !== -1) {
+
+            colors.splice(index, 1);
+
+        }
+
+
+        const hiddenInput =
+            form.querySelector(
+                `input[data-color="${color}"]`
+            );
+
+        if (hiddenInput) {
+
+            hiddenInput.remove();
+
+        }
+
+
+        renderColors();
+
+    }
+
+
+    /* =========================
+       RENDER COLORS
+    ========================= */
+
+    function renderColors() {
+
+        selectedColors.innerHTML = "";
+
+        previewColors.innerHTML = "";
+
+
+        colors.forEach(color => {
+
+            /* Admin selected color */
+
+            const item =
+                document.createElement("div");
+
+            item.className = "color-item";
+
+
+            const circle =
+                document.createElement("div");
+
+            circle.className = "color-circle";
+
+            circle.style.backgroundColor = color;
+
+
+            const text =
+                document.createElement("span");
+
+            text.textContent = color;
+
+
+            const remove =
+                document.createElement("button");
+
+            remove.type = "button";
+
+            remove.className = "remove-color";
+
+            remove.textContent = "×";
+
+
+            remove.onclick = () => {
+
+                removeColor(color);
+
+            };
+
+
+            item.appendChild(circle);
+
+            item.appendChild(text);
+
+            item.appendChild(remove);
+
+
+            selectedColors.appendChild(item);
+
+
+            /* Product Preview */
+
+            const previewDot =
+                document.createElement("div");
+
+            previewDot.className =
+                "preview-dot";
+
+            previewDot.style.backgroundColor =
+                color;
+
+
+            previewColors.appendChild(
+                previewDot
+            );
+
+        });
+
+    }
+
+
+    /* =========================
+       LIVE PRODUCT NAME
+    ========================= */
+
+    document
+        .getElementById("productName")
+        .addEventListener("input", function () {
+
+            document
+                .getElementById("previewName")
+                .textContent =
+                this.value || "Your Product";
+
+        });
+
+
+    /* =========================
+       LIVE PRICE
+    ========================= */
+
+    document
+        .getElementById("productPrice")
+        .addEventListener("input", function () {
+
+            document
+                .getElementById("previewPrice")
+                .textContent =
+                this.value
+                    ? `Rs. ${this.value}`
+                    : "Rs. 0";
+
+        });
+
+
+    /* =========================
+       LIVE IMAGE
+    ========================= */
+
+    document
+        .getElementById("imageUrl")
+        .addEventListener("input", function () {
+
+            const img =
+                document.getElementById("previewImg");
+
+            const placeholder =
+                document.getElementById("placeholder");
+
+
+            if (this.value) {
+
+                img.src = this.value;
+
+                img.style.display = "block";
+
+                placeholder.style.display =
+                    "none";
+
+            } else {
+
+                img.style.display = "none";
+
+                placeholder.style.display =
+                    "block";
+
+            }
+
+        });
+
+</script>
+
 </body>
 </html>

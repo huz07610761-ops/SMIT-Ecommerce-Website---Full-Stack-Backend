@@ -1,34 +1,58 @@
 const mongoose = require('mongoose');
 
-const ProductSchema = mongoose.Schema({
-    name: {
-        type: String,
-        required: [true, "Please enter your name"]
+const ProductSchema = new mongoose.Schema(
+    {
+        name: {
+            type: String,
+            required: [true, "Please enter your name"],
+            trim: true
+        },
+
+        price: {
+            type: Number,
+            required: [true, "Please enter your product price"],
+            min: 0
+        },
+
+        delPrice: {
+            type: Number,
+            min: 0
+        },
+
+        rating: {
+            type: Number,
+            min: 0,
+            max: 5
+        },
+
+        img: {
+            type: String,
+            trim: true
+        },
+
+        description: {
+            type: String,
+            trim: true
+        },
+
+        size: {
+            type: String,
+            trim: true
+        },
+
+        // Multiple colors
+        colors: {
+            type: [String],
+            default: []
+        }
     },
-    price: {
-        type: Number,
-        required: [true, "Please enter your product price"]
-    },
-    delPrice: {
-        type: Number
-    },
-    rating: {
-        type: Number
-    },
-    img: {
-        type: String
-    },
-    description:{
-        type:String
-    },
-    size:{
-        type:String
-    },
-    colour:{
-        type:String
+    {
+        timestamps: true
     }
-});
+);
 
-const UserModel = mongoose.models.Products || mongoose.model('Products', ProductSchema);
+const ProductModel =
+    mongoose.models.Products ||
+    mongoose.model('Products', ProductSchema);
 
-module.exports = UserModel;
+module.exports = ProductModel;

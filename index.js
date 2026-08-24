@@ -17,7 +17,7 @@ app.use(cors())
 app.use('/form',router)
 
 app.set('view engine','ejs')
-app.set('views','view')
+app.set('views',path.join(__dirname, "view"))
 
 app.get('/', (req, res) => {
     res.json({
